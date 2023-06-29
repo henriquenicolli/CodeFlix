@@ -1,10 +1,11 @@
 package com.admin.catalogo.domain.category;
 
-import java.time.Instant;
-import java.util.UUID;
+import com.admin.catalogo.domain.AggregateRoot;
+import com.admin.catalogo.domain.validation.ValidationHandler;
 
-public class Category {
-    public String id;
+import java.time.Instant;
+
+public class Category extends AggregateRoot<CategoryID>  {
     public String name;
     public String description;
     public boolean active;
@@ -13,35 +14,36 @@ public class Category {
     public Instant deletedAt;
 
     private Category(
-            final String id,
-            final String name,
-            final String description,
-            final boolean active,
-            final Instant createdAt,
-            final Instant updatedAt,
-            final Instant deletedAt
+            final CategoryID anId,
+            final String aName,
+            final String aDescription,
+            final boolean isActive,
+            final Instant aCreatedAt,
+            final Instant aUpdatedAt,
+            final Instant aDeletedAt
     ) {
-        this.id = id;
-        this.name = name;
-        this.description = description;
-        this.active = active;
-        this.createdAt = createdAt;
-        this.updatedAt = updatedAt;
-        this.deletedAt = deletedAt;
+        super(anId);
+        this.name = aName;
+        this.description = aDescription;
+        this.active = isActive;
+        this.createdAt = aCreatedAt;
+        this.updatedAt = aUpdatedAt;
+        this.deletedAt = aDeletedAt;
     }
 
     public static Category newCategory(final String aName, final String aDescription, final boolean isActive) {
-        final var id = UUID.randomUUID().toString();
+        final var id = CategoryID.unique();
         final var now = Instant.now();
         return new Category(id, aName, aDescription, isActive, now, now, null);
     }
 
-    public String getId() {
-        return id;
+    @Override
+    public void validate(final ValidationHandler handler) {
+        new CategoryValidator(this, handler).validate();
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public CategoryID getId() {
+        return id;
     }
 
     public String getName() {
