@@ -6,7 +6,7 @@ import com.admin.catalogo.domain.validation.ValidationHandler;
 
 import java.util.List;
 
-public class ThroesValidationHandler implements ValidationHandler {
+public class ThrowsValidationHandler implements ValidationHandler {
 
     @Override
     public ValidationHandler append(final Error anError) {
@@ -23,7 +23,7 @@ public class ThroesValidationHandler implements ValidationHandler {
         try {
             aValidation.validate();
         } catch (final Exception ex) {
-            throw DomainException.with(List.of(new Error(ex.getMessage())));
+            throw DomainException.with(new Error(ex.getMessage()));
         }
 
         return this;
