@@ -6,6 +6,8 @@ import com.admin.catalogo.domain.validation.Error;
 
 public class CategoryValidator extends Validator {
 
+    public static final int MAX_LENGTH = 255;
+    public static final int MIN_LENGTH = 3;
     private final Category category;
 
     protected CategoryValidator(final Category aCategory, final ValidationHandler aHandler) {
@@ -29,7 +31,7 @@ public class CategoryValidator extends Validator {
         }
 
         final int length = name.trim().length();
-        if (length > 255 || length < 3) {
+        if (length > MAX_LENGTH || length < MIN_LENGTH) {
             this.validationHandler().append(new Error("'name' must be between 3 and 255 characters"));
         }
     }
