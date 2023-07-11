@@ -1,12 +1,7 @@
 package com.admin.catalogo.application;
 
-import com.admin.catalogo.domain.category.Category;
+public abstract class UseCase<IN, OUT> {
 
-public class UseCase {
-
-    public Category execute() {
-        return Category.newCategory("teste", "description", true);
-    }
-
+    public abstract OUT execute(IN anIm);
 
 }
