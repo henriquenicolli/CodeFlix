@@ -23,7 +23,7 @@ public class CategoryValidator extends Validator {
     private void checkNameConstraints() {
         final var name = this.category.getName();
         if (name == null) {
-            this.validationHandler().append(new Error("'name' should not be null"));
+            this.validationHandler().append(new Error("'name' should not be null")); //composite ??
             return;
         }
 
